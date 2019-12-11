@@ -6,13 +6,11 @@ type Error int32
 /* 返回客户端错误码 */
 /* 区间：0-10000 */
 const (
-	/*
-		通用模块错误 0~500
-	*/
 	// Success 成功 0
 	Success = Error(iota)
-	// ErrUnknown 未知错误
-	ErrUnknown = Error(1)
+
+	// UnknownError 未知错误 1
+	UnknownError = Error(1)
 	// ErrParam 参数错误 2
 	ErrParam = Error(2)
 	// ErrParamNil 请求参数为空 3
@@ -23,41 +21,44 @@ const (
 	ErrDB = Error(5)
 	// ErrRedis 缓存操作失败 6
 	ErrRedis = Error(6)
-	// ErrConnect 连接失败 7
-	ErrConnect = Error(7)
-	// ErrNewPlayer 创建玩家失败 8
-	ErrNewPlayer = Error(8)
-	// ErrTokenEmpty token is empty 9
-	ErrTokenEmpty = Error(9)
-	// ErrTokenDecrypt token decrypt failed 10
-	ErrTokenDecrypt = Error(10)
-	// ErrTokenFormat token format is invalid 11
-	ErrTokenFormat = Error(11)
-	// ErrTokenExpired token expired 12
-	ErrTokenExpired = Error(12)
-	// ErrTableConfig 13
-	ErrTableConfig = Error(13)
+	// ErrTableConfig 表配置错误 7
+	ErrTableConfig = Error(7)
+	// ErrTokenEmpty token is empty 8
+	ErrTokenEmpty = Error(8)
+	// ErrTokenDecrypt token decrypt failed 9
+	ErrTokenDecrypt = Error(9)
+	// ErrTokenFormat token format is invalid 10
+	ErrTokenFormat = Error(10)
+	// ErrTokenExpired token expired 11
+	ErrTokenExpired = Error(11)
+	// ErrCreateUUID 生成uuid失败
+	ErrCreateUUID = Error(12)
+	// ErrHTTP http请求失败
+	ErrHTTP = Error(13)
+	// ErrHTTPTooFast http请求太快
+	ErrHTTPTooFast = Error(14)
 )
 
 var errMsg = map[Error]string{
-	Success:         "成功",
-	ErrUnknown:      "未知错误",
+	UnknownError:    "未知错误",
 	ErrParam:        "参数错误",
 	ErrParamNil:     "请求参数为空",
 	ErrParse:        "解析失败",
 	ErrDB:           "数据库操作失败",
 	ErrRedis:        "缓存操作失败",
-	ErrConnect:      "连接失败",
-	ErrNewPlayer:    "创建玩家失败",
+	ErrTableConfig:  "表配置错误",
 	ErrTokenEmpty:   "token为空",
 	ErrTokenDecrypt: "token解析失败",
 	ErrTokenFormat:  "token格式错误",
 	ErrTokenExpired: "token已过期",
+	ErrCreateUUID:   "生成uuid失败",
+	ErrHTTP:         "http请求失败",
+	ErrHTTPTooFast:  "http请求太快",
 }
 
 // String 获得错误码描述信息
-func (e *Error) String() string {
-	v, ok := errMsg[*e]
+func (e Error) String() string {
+	v, ok := errMsg[e]
 	if !ok {
 		return "未定义错误描述"
 	}

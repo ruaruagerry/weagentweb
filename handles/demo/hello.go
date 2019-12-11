@@ -1,9 +1,9 @@
 package demo
 
 import (
-	"weagent/gconst"
-	"weagent/pb"
-	"weagent/server"
+	"weagentweb/gconst"
+	"weagentweb/pb"
+	"weagentweb/server"
 
 	"github.com/golang/protobuf/proto"
 )

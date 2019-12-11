@@ -21,6 +21,7 @@ import (
 	"weagentweb/servercfg"
 
 	_ "weagentweb/handles/file"
+	_ "weagentweb/handles/money"
 
 	log "github.com/sirupsen/logrus"
 )
