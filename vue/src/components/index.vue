@@ -26,7 +26,6 @@ import addItems from '@/components/addItems.vue'
 import getItems from '@/components/getItems.vue'
 import getResources from '@/components/getResources.vue'
 import addResources from '@/components/addResources.vue'
-import { formatDate } from '../common/js/date'
 
 export default {
   created () { },

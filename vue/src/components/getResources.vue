@@ -56,7 +56,7 @@ export default {
     onGetResources () {
       if (this.playerid === '') {
         this.$message.error('搜索的用户ID不能为0')
-        return;
+        return
       }
 
       getResource(this.playerid).then(resp => {
