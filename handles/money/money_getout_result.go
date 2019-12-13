@@ -75,8 +75,8 @@ func getoutResultHandle(c *server.StupidContext) {
 
 	// 提现成功
 	if req.Status == tables.GetoutStatusSuccess {
-		moneynum -= getoutrecord.Money
-		getout += getoutrecord.Money
+		moneynum -= getoutrecord.GetoutMoney
+		getout += getoutrecord.GetoutMoney
 
 		// redis multi set
 		conn.Send("MULTI")
