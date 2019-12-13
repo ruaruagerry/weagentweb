@@ -30,9 +30,3 @@ npm test
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 
-跑不起来怎么办：
-1.删除package.json
-2.删除node_modules
-3.npm init
-4.vue init webpack
-5.npm install
