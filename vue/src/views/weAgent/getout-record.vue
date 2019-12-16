@@ -5,53 +5,68 @@
                   :data="list"
                   border
                   fit
-                  highlight-current-row
-                  style="width: 100%;"
-                  @sort-change="sortChange">
-            <el-table-column label="RID"
-                             width="110px"
+                  highlight-current-row>
+            <el-table-column label="rid"
+                             width="180"
                              align="center">
                 <template slot-scope="{row}">
                     <span>{{ row.rid }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="ID"
+            <el-table-column label="id"
                              prop="id"
                              align="center"
-                             width="80">
+                             width="180">
                 <template slot-scope="{row}">
                     <span>{{ row.id }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="Created"
-                             width="150px"
-                             align="center">
+            <el-table-column label="name"
+                             prop="name"
+                             align="center"
+                             width="280">
                 <template slot-scope="{row}">
-                    <span>{{ row.created | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+                    <span>{{ row.name }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="Status"
+            <el-table-column label="getoutmoney"
+                             prop="getoutmoney"
+                             align="center"
+                             width="280">
+                <template slot-scope="{row}">
+                    <span>{{ row.getoutmoney }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="createtime"
+                             width="300"
+                             align="center">
+                <template slot-scope="{row}">
+                    <span>{{ row.createtime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="status"
                              class-name="status-col"
-                             width="100">
+                             width="118">
                 <template slot-scope="{row}">
                     <el-tag :type="row.status | statusFilter">
-                        {{ row.status }}
+                        {{ statusNameFilter(row.status) }}
                     </el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="Actions"
                              align="center"
-                             width="230"
+                             width="330"
                              class-name="small-padding fixed-width">
                 <template slot-scope="{row}">
                     <el-button size="mini"
                                type="success"
                                @click="handleModifyStatus(row,'published')">
-                        Publish
+                        同意
                     </el-button>
                     <el-button size="mini"
+                               type="danger"
                                @click="handleModifyStatus(row,'draft')">
-                        Draft
+                        拒绝
                     </el-button>
                 </template>
             </el-table-column>
@@ -155,7 +170,6 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { moneyGetoutRecord, moneyGetoutResult } from '@/api/weagent'
 
-
 const calendarTypeOptions = [
     { key: 'CN', display_name: 'China' },
     { key: 'US', display_name: 'USA' },
@@ -176,14 +190,12 @@ export default {
     filters: {
         statusFilter (status) {
             const statusMap = {
-                published: 'success',
-                draft: 'info',
-                deleted: 'danger'
+                0: 'info',
+                1: 'danger',
+                2: 'success',
+                3: 'danger'
             }
             return statusMap[status]
-        },
-        typeFilter (type) {
-            return calendarTypeKeyValue[type]
         }
     },
     data () {
@@ -234,6 +246,16 @@ export default {
         this.getList()
     },
     methods: {
+        statusNameFilter (status) {
+            const statusMap = {
+                0: '审核中',
+                1: '拒绝',
+                2: '提现成功',
+                3: '提现失败'
+            }
+
+            return statusMap[status]
+        },
         getList () {
             this.listLoading = true
 
@@ -242,14 +264,13 @@ export default {
 
             var params = {
                 start: start,
-                end: end,
+                end: end
             }
             var data = JSON.stringify(params)
             moneyGetoutRecord(data).then(response => {
-                console.log("respnes:", response)
-
-                this.list = response.data.items
-                this.total = response.data.total
+                console.log('response:', response.getoutrecords)
+                this.list = response.getoutrecords
+                this.total = response.getoutrecords.length
 
                 // Just to simulate the time of the request
                 setTimeout(() => {
@@ -264,7 +285,7 @@ export default {
         handleModifyStatus (row, status) {
             var params = {
                 rid: row.rid,
-                status: row.status,
+                status: row.status
             }
             var data = JSON.stringify(params)
 
@@ -374,7 +395,7 @@ export default {
                     return v[j]
                 }
             }))
-        },
+        }
     }
 }
 </script>
