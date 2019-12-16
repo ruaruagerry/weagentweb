@@ -2,7 +2,11 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header">
-        <a class="link-type link-title" target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/theme.html">
+        <a
+          class="link-type link-title"
+          target="_blank"
+          href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/theme.html"
+        >
           Theme documentation
         </a>
       </div>
@@ -34,10 +38,22 @@
     </div>
 
     <div class="block">
-      <el-button type="primary" icon="el-icon-edit" />
-      <el-button type="primary" icon="el-icon-share" />
-      <el-button type="primary" icon="el-icon-delete" />
-      <el-button type="primary" icon="el-icon-search">
+      <el-button
+        type="primary"
+        icon="el-icon-edit"
+      />
+      <el-button
+        type="primary"
+        icon="el-icon-share"
+      />
+      <el-button
+        type="primary"
+        icon="el-icon-delete"
+      />
+      <el-button
+        type="primary"
+        icon="el-icon-search"
+      >
         Search
       </el-button>
       <el-button type="primary">
@@ -47,7 +63,12 @@
     </div>
 
     <div class="block">
-      <el-tag v-for="tag in tags" :key="tag.type" :type="tag.type" class="tag-item">
+      <el-tag
+        v-for="tag in tags"
+        :key="tag.type"
+        :type="tag.type"
+        class="tag-item"
+      >
         {{ tag.name }}
       </el-tag>
     </div>
@@ -101,20 +122,20 @@ export default {
 </script>
 
 <style scoped>
-.field-label{
-  vertical-align: middle;
+.field-label {
+    vertical-align: middle;
 }
 .box-card {
-  width: 400px;
-  max-width: 100%;
-  margin: 20px auto;
+    width: 400px;
+    max-width: 100%;
+    margin: 20px auto;
 }
 
 .block {
-  padding: 30px 24px;
+    padding: 30px 24px;
 }
 
 .tag-item {
-  margin-right: 15px;
+    margin-right: 15px;
 }
 </style>
