@@ -127,7 +127,7 @@ service.interceptors.response.use(
                     jsondata = JSON.parse(res.data)
                 }
 
-                console.log('requrl:' + requrl + ' ,jsondata:' + jsondata)
+                console.log('requrl:' + requrl + ' , data:' + res.data)
                 return jsondata
             }
 

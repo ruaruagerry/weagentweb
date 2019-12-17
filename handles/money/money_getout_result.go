@@ -2,6 +2,7 @@ package money
 
 import (
 	"encoding/json"
+	"time"
 	"weagentweb/gconst"
 	"weagentweb/pb"
 	"weagentweb/rconst"
@@ -15,6 +16,10 @@ import (
 type getoutResultReq struct {
 	Rid    int64 `json:"rid"`
 	Status int32 `json:"status"`
+}
+
+type getoutResultRsp struct {
+	ResultTime time.Time `json:"resulttime"`
 }
 
 func getoutResultHandle(c *server.StupidContext) {
@@ -35,6 +40,13 @@ func getoutResultHandle(c *server.StupidContext) {
 	}
 
 	log.Info("getoutResultHandle enter, req:", string(c.Body))
+
+	if req.Status == tables.GetoutStatusReview {
+		httpRsp.Result = proto.Int32(int32(gconst.ErrParse))
+		httpRsp.Msg = proto.String("请求状态错误")
+		log.Errorf("code:%d msg:%s status err, status:%d", httpRsp.GetResult(), httpRsp.GetMsg(), req.Status)
+		return
+	}
 
 	db := c.DbConn
 	conn := c.RedisConn
@@ -96,6 +108,7 @@ func getoutResultHandle(c *server.StupidContext) {
 
 	// 更新
 	getoutrecord.Status = req.Status
+	getoutrecord.ResultTime = time.Now()
 	_, err = db.Where("rid = ?", req.Rid).AllCols().Update(&getoutrecord)
 	if err != nil {
 		httpRsp.Result = proto.Int32(int32(gconst.ErrDB))
@@ -123,7 +136,18 @@ func getoutResultHandle(c *server.StupidContext) {
 	// 通知发钱
 
 	// rsp
+	rsp := &getoutResultRsp{
+		ResultTime: getoutrecord.ResultTime,
+	}
+	data, err := json.Marshal(rsp)
+	if err != nil {
+		httpRsp.Result = proto.Int32(int32(gconst.ErrParse))
+		httpRsp.Msg = proto.String("返回信息marshal解析失败")
+		log.Errorf("code:%d msg:%s json marshal err, err:%s", httpRsp.GetResult(), httpRsp.GetMsg(), err.Error())
+		return
+	}
 	httpRsp.Result = proto.Int32(int32(gconst.Success))
+	httpRsp.Data = data
 
 	log.Info("getoutResultHandle rsp, result:", httpRsp.GetResult())
 

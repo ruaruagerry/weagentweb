@@ -50,7 +50,7 @@ func getoutRecordHandle(c *server.StupidContext) {
 	db := c.DbConn
 
 	getoutrecords := []*tables.Getoutrecord{}
-	err := db.Limit(end, start).Find(&getoutrecords)
+	err := db.Desc("createtime").Limit(end, start).Find(&getoutrecords)
 	if err != nil {
 		httpRsp.Result = proto.Int32(int32(gconst.ErrDB))
 		httpRsp.Msg = proto.String("查询提现记录失败")
