@@ -7,4 +7,4 @@ VALUES  ( 2, 2, 2, "2019-12-14 00:00:00", 0);
 
 
 创建账号：
-http://127.0.0.1:3004/auth/web/add?account=admin&password=111111&nick=xiaoluo&protrait=https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1715764271,2312685097&fm=11&gp=0.jpg&key=UXnezMezvpLnQre6XvhdWpHxiWFSrBZR
+http://127.0.0.1:3004/auth/web/add?account=admin&password=111111&nick=xiaoluo&protrait=https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif&key=UXnezMezvpLnQre6XvhdWpHxiWFSrBZR

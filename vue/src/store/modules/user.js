@@ -53,6 +53,23 @@ const actions = {
         })
     },
 
+    getInfo ({ commit, state }) {
+        return new Promise((resolve, reject) => {
+            var data = {
+                name: state.name,
+                avatar: state.avatar,
+                introduction: state.introduction,
+                roles: state.roles,
+            }
+
+            if (!roles || roles.length <= 0) {
+                reject('getInfo: roles must be a non-null array')
+            }
+
+            resolve(data)
+        })
+    },
+
     // user logout
     logout ({ commit, state, dispatch }) {
         return new Promise((resolve, reject) => {
