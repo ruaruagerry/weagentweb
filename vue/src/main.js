@@ -29,7 +29,7 @@ import * as filters from './filters' // global filters
  */
 // import { mockXHR } from '../mock'
 // if (process.env.NODE_ENV === 'production') {
-//   mockXHR()
+//     mockXHR()
 // }
 
 Vue.use(Element, {

@@ -46,3 +46,10 @@ export function login (data) {
     })
 }
 
+export function getInfo () {
+    return request({
+        url: rootUrl + '/auth/web/getinfo',
+        method: 'get'
+    })
+}
+

@@ -16,17 +16,8 @@ type webLoginReq struct {
 	Password string `json:"password"`
 }
 
-type webLoginUserInfo struct {
-	ID        string   `json:"id"`
-	NickName  string   `json:"nickname"`
-	Gender    int32    `json:"gender"`
-	AvatarURL string   `json:"avatarurl"`
-	Role      []string `json:"role"`
-}
-
 type webLoginRsp struct {
-	Token    string            `json:"token"`
-	UserInfo *webLoginUserInfo `json:"userinfo"`
+	Token string `json:"token"`
 }
 
 func webLoginHandle(c *server.StupidContext) {
@@ -96,16 +87,8 @@ func webLoginHandle(c *server.StupidContext) {
 	token := server.GenTK(playerid)
 
 	// rsp
-	rspuserinfo := &webLoginUserInfo{
-		ID:        playerid,
-		NickName:  webaccount.Nick,
-		Gender:    webaccount.Gender,
-		AvatarURL: webaccount.Portrait,
-		Role:      webaccount.Role,
-	}
 	rsp := &webLoginRsp{
-		Token:    token,
-		UserInfo: rspuserinfo,
+		Token: token,
 	}
 	data, err := json.Marshal(rsp)
 	if err != nil {

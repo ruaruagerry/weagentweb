@@ -1,5 +1,5 @@
 import { logout } from '@/api/user'
-import { login } from '@/api/weagent'
+import { login, getInfo } from '@/api/weagent'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -41,11 +41,38 @@ const actions = {
             var data = JSON.stringify(params)
             login(data).then(response => {
                 commit('SET_TOKEN', response.token)
-                commit('SET_ROLES', response.userinfo.role)
-                commit('SET_NAME', response.userinfo.nickname)
-                commit('SET_AVATAR', response.userinfo.avatarurl)
-
                 setToken(response.token)
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+
+    // get user info
+    getInfo ({ commit, state }) {
+        return new Promise((resolve, reject) => {
+            getInfo(state.token).then(response => {
+                if (!response) {
+                    reject('Verification failed, please Login again.')
+                }
+
+                var data = {
+                    roles: response.role,
+                    name: response.nickname,
+                    avatar: response.avatarurl,
+                    introduction: "yeah yeah",
+                }
+
+                // roles must be a non-empty array
+                if (!data.roles || data.roles.length <= 0) {
+                    reject('getInfo: roles must be a non-null array!')
+                }
+
+                commit('SET_ROLES', data.roles)
+                commit('SET_NAME', data.name)
+                commit('SET_AVATAR', data.avatar)
+                commit('SET_INTRODUCTION', data.introduction)
                 resolve(data)
             }).catch(error => {
                 reject(error)
@@ -53,20 +80,13 @@ const actions = {
         })
     },
 
-    getInfo ({ commit, state }) {
-        return new Promise((resolve, reject) => {
-            var data = {
-                name: state.name,
-                avatar: state.avatar,
-                introduction: state.introduction,
-                roles: state.roles,
-            }
-
-            if (!roles || roles.length <= 0) {
-                reject('getInfo: roles must be a non-null array')
-            }
-
-            resolve(data)
+    // remove token
+    resetToken ({ commit }) {
+        return new Promise(resolve => {
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', [])
+            removeToken()
+            resolve()
         })
     },
 
@@ -88,7 +108,7 @@ const actions = {
                 reject(error)
             })
         })
-    },
+    }
 }
 
 export default {
