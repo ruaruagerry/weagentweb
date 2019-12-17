@@ -20,6 +20,7 @@ import (
 	"weagentweb/server"
 	"weagentweb/servercfg"
 
+	_ "weagentweb/handles/auth"
 	_ "weagentweb/handles/file"
 	_ "weagentweb/handles/money"
 

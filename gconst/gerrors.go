@@ -37,6 +37,8 @@ const (
 	ErrHTTP = Error(13)
 	// ErrHTTPTooFast http请求太快
 	ErrHTTPTooFast = Error(14)
+	// ErrPassword 密码错误
+	ErrPassword = Error(15)
 )
 
 var errMsg = map[Error]string{
@@ -54,6 +56,7 @@ var errMsg = map[Error]string{
 	ErrCreateUUID:   "生成uuid失败",
 	ErrHTTP:         "http请求失败",
 	ErrHTTPTooFast:  "http请求太快",
+	ErrPassword:     "密码错误",
 }
 
 // String 获得错误码描述信息

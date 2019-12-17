@@ -120,7 +120,7 @@ service.interceptors.response.use(
             return Promise.reject(new Error(res.msg || 'Error'))
         } else {
             // todo login
-            if (requrl !== '/dev-api/user/login' && requrl !== '/dev-api/user/info') {
+            if (requrl !== '/dev-api/user/logout') {
                 var jsondata = new Object()
                 if (res.data != undefined) {
                     res.data = base64_decode(res.data)

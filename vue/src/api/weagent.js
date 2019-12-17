@@ -7,7 +7,6 @@ export const GetoutStatusRefused = 1 // 审核拒绝
 export const GetoutStatusSuccess = 2 // 提现成功
 export const GetoutStatusFailed = 3  // 提现失败
 
-
 export function moneyGetoutRecord (data) {
     return request({
         url: rootUrl + '/money/getout/record',
@@ -36,6 +35,14 @@ export function moneyGetoutCount () {
     return request({
         url: rootUrl + '/money/getout/count',
         method: 'get',
+    })
+}
+
+export function login (data) {
+    return request({
+        url: rootUrl + '/auth/web/login',
+        method: 'post',
+        data
     })
 }
 
