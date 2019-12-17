@@ -60,7 +60,7 @@ func getoutPlayerRecordHandle(c *server.StupidContext) {
 	}
 
 	// rsp
-	rsp := &getoutRecordRsp{
+	rsp := &getoutPlayerRecordRsp{
 		GetoutRecords: getoutrecords,
 	}
 	data, err := json.Marshal(rsp)
