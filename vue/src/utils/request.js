@@ -95,8 +95,6 @@ service.interceptors.response.use(
         const res = response.data
         const requrl = response.config.url
 
-        console.log("all requrl:", requrl)
-
         if (res.result !== 0) {
             Message({
                 message: res.msg || 'Error',
@@ -117,7 +115,6 @@ service.interceptors.response.use(
             //         })
             //     })
             // }
-            console.log("err requrl:", requrl)
 
             return Promise.reject(new Error(res.msg || 'Error'))
         } else {
@@ -129,7 +126,6 @@ service.interceptors.response.use(
                     jsondata = JSON.parse(res.data)
                 }
 
-                console.log('requrl:' + requrl + ' , data:' + res.data)
                 return jsondata
             }
 
